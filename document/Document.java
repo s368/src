@@ -132,7 +132,22 @@ public abstract class Document {
 	{
 	    // TODO: You will play with this method in week 1, and 
 		// then implement it in week 2
-	    return 0.0;
+		
+		double a = 206.835;
+		double b = 1.015;
+		double c = 84.6;
+		
+		double sents = getNumSentences();
+		double words = getNumWords();
+		double sylls = getNumSyllables();
+		
+		double score = -1.0;
+		if(text.length() != 0)
+		{
+			score = a - b*(words/sents) - c*(sylls/words);
+		}
+			
+	    return score;
 	}
 	
 	

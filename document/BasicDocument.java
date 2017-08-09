@@ -36,7 +36,12 @@ public class BasicDocument extends Document
 	{
 		//TODO: Implement this method in week 2 according to the comments above.  
 		// See the Module 2 support videos if you need help.
-	    return 0;
+
+		String pat = "[^.,!?0-9 ]+";
+		List<String> a = getTokens(pat);
+		int nword = a.size();
+		
+        return nword;
 	}
 	
 	/**
@@ -56,7 +61,12 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 2 support videos 
         // if you need help.
-        return 0;
+		
+		String pat = "[^.!?]+";
+		List<String> a = getTokens(pat);
+		int nsent = a.size();
+		
+        return nsent;
 	}
 	
 	/**
@@ -81,7 +91,13 @@ public class BasicDocument extends Document
 		// expression for the syllable counting.  We recommend you implement 
 		// the helper function countSyllables in Document.java using a loop, 
 		// and then call it here on each word.
-        return 0;
+
+		List<String> tokens = getTokens("[aeiouyAEIOUY]+");
+		List<String> loneEs = getTokens("[^aeiouyAEIOUY]+[eE]\\b");
+		List<String> singleEs = getTokens("\\b[^aeiouyAEIOUY]*[eE]\\b");
+		
+		
+		return tokens.size() - (loneEs.size() - singleEs.size());
 	}
 	
 	
@@ -111,6 +127,11 @@ public class BasicDocument extends Document
 		testCase(new BasicDocument("Sentences?!"), 3, 1, 1);
 		testCase(new BasicDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
+		
+//		BasicDocument myDoc = new BasicDocument("test????? sentence,??????? probably!,        good");
+//		double score = myDoc.getFleschScore();
+//		int nwords = myDoc.getNumWords();
+//		System.out.println("words = " + nwords);
 	}
 	
 }
