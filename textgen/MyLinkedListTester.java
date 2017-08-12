@@ -115,7 +115,25 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check size is correct ", 2, list1.size());
 		
 		// TODO: Add more tests here
-	}
+
+		try {
+			shortList.remove(-1);
+			fail("Remove: at -1");
+		}
+		catch (IndexOutOfBoundsException e) {}
+
+		try {
+			shortList.remove(10);
+			fail("Remove: at 10");
+		}
+		catch (IndexOutOfBoundsException e) {}
+
+		try {
+			emptyList.remove(0);
+			fail("Remove: from empty");
+		}
+		catch (IndexOutOfBoundsException e) {}
+}
 	
 	/** Test adding an element into the end of the list, specifically
 	 *  public boolean add(E element)
@@ -124,8 +142,20 @@ public class MyLinkedListTester {
 	public void testAddEnd()
 	{
         // TODO: implement this test
+		shortList.add("C");
+		assertEquals("Check last", "C", shortList.get(2));
 		
-	}
+		emptyList.add(5);
+		assertEquals("Check last", (Integer)5, emptyList.get(0));
+
+		try {
+			shortList.add(null);
+			fail("Adding a 'null'");
+		}
+		catch (NullPointerException e) {
+		
+		}
+}
 
 	
 	/** Test the size of the list */
@@ -133,6 +163,10 @@ public class MyLinkedListTester {
 	public void testSize()
 	{
 		// TODO: implement this test
+		assertEquals("Check size is correct ", 2, shortList.size());
+		assertEquals("Check size is correct ", 0, emptyList.size());
+		assertEquals("Check size is correct ", 10, longerList.size());
+		assertEquals("Check size is correct ", 3, list1.size());
 	}
 
 	
@@ -145,14 +179,62 @@ public class MyLinkedListTester {
 	public void testAddAtIndex()
 	{
         // TODO: implement this test
+		shortList.add(2,"D");
+		assertEquals("Check last", "D", shortList.get(2));
+
+		shortList.add(2,"C");
+		assertEquals("Check inter", "C", shortList.get(2));
+		assertEquals("Check before", "B", shortList.get(1));
+		assertEquals("Check after", "D", shortList.get(3));
+
+		shortList.add(0,"first");
+		assertEquals("Check first", "first", shortList.get(0));
+
+		try {
+			shortList.add(0,null);
+			fail("testAddAtIndex: adding a 'null'");
+		}
+		catch (NullPointerException e) {}
 		
-	}
+		try {
+			shortList.add(-1,"C");
+			fail("testAddAtIndex: adding at -1");
+		}
+		catch (IndexOutOfBoundsException e) {}
+
+		try {
+			shortList.add(10,"E");
+			fail("testAddAtIndex: adding out size");
+		}
+		catch (IndexOutOfBoundsException e) {}
+}
 	
 	/** Test setting an element in the list */
 	@Test
 	public void testSet()
 	{
 	    // TODO: implement this test
+		String old = shortList.set(1,"C");
+		assertEquals("Set", "C", shortList.get(1));
+		assertEquals("Set", "B", old);
+
+		try {
+			shortList.set(0,null);
+			fail("Set: a 'null'");
+		}
+		catch (NullPointerException e) {}
+		
+		try {
+			shortList.set(-1,"C");
+			fail("Set: at -1");
+		}
+		catch (IndexOutOfBoundsException e) {}
+
+		try {
+			shortList.set(10,"C");
+			fail("Set: out size");
+		}
+		catch (IndexOutOfBoundsException e) {}
 	    
 	}
 	
