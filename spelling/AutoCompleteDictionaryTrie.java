@@ -70,6 +70,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 			if(!curr.endsWord())
 			{
 				size++;
+				curr.setEndsWord(true);
 				done = true;
 			}
 				
@@ -156,7 +157,51 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 //       Add all of its child nodes to the back of the queue
     	 // Return the list of completions
     	 
-         return null;
+ 		String low = prefix.toLowerCase();
+ 		TrieNode curr = root;
+ 		TrieNode nc = null;
+ 		List<String> listCompletion = new LinkedList<String>();
+ 		for(char c : low.toCharArray())
+ 		{
+ 			nc = curr.getChild(c);
+ 			
+ 			if(nc == null)
+ 			{
+ 				return listCompletion;
+ 			}
+ 			else
+ 			{
+ 				curr = nc;
+ 			}
+ 		}
+ 		
+ 		if(curr.endsWord())
+			listCompletion.add(curr.getText());
+ 		
+ 		LinkedList<TrieNode> q = new LinkedList<TrieNode>();
+		Set<Character> sc = curr.getValidNextCharacters();
+		for(char c : sc)
+		{
+			q.add(curr.getChild(c));
+		}
+		
+		TrieNode com;
+		while(!q.isEmpty() && listCompletion.size() < numCompletions)
+		{
+			com = q.getFirst();
+			if(com.endsWord())
+				listCompletion.add(com.getText());
+
+			sc = com.getValidNextCharacters();
+			for(char c : sc)
+			{
+				q.add(com.getChild(c));
+			}
+			
+			q.removeFirst();
+		}
+
+		return listCompletion;
      }
 
  	// For debugging
