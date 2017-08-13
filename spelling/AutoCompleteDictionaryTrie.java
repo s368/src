@@ -98,7 +98,6 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 		String low = s.toLowerCase();
 		TrieNode curr = root;
 		TrieNode nc = null;
-		boolean done = true;
 		for(char c : low.toCharArray())
 		{
 			nc = curr.getChild(c);
@@ -112,8 +111,11 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 				curr = nc;
 			}
 		}
-
-		return true;
+		
+		if(curr.endsWord())
+			return true;
+		else
+			return false;
 	}
 
 	/** 
