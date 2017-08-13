@@ -40,7 +40,42 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public boolean addWord(String word)
 	{
 	    //TODO: Implement this method.
-	    return false;
+		String low = word.toLowerCase();
+		TrieNode curr = root;
+		TrieNode nc = null;
+		boolean done = true;
+		for(char c : low.toCharArray())
+		{
+			nc = curr.insert(c);
+			
+			if(nc == null)
+			{
+				curr = curr.getChild(c);
+				done = false;
+			}
+			else
+			{
+				curr = nc;
+				done = true;
+			}
+		}
+
+		if(done)
+		{
+			curr.setEndsWord(true);
+			size++;
+		}
+		else//characters is not added but "new" word!
+		{
+			if(!curr.endsWord())
+			{
+				size++;
+				done = true;
+			}
+				
+		}
+		
+		return done;
 	}
 	
 	/** 
@@ -50,7 +85,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public int size()
 	{
 	    //TODO: Implement this method
-	    return 0;
+	    return size;
 	}
 	
 	
@@ -60,7 +95,25 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public boolean isWord(String s) 
 	{
 	    // TODO: Implement this method
-		return false;
+		String low = s.toLowerCase();
+		TrieNode curr = root;
+		TrieNode nc = null;
+		boolean done = true;
+		for(char c : low.toCharArray())
+		{
+			nc = curr.getChild(c);
+			
+			if(nc == null)
+			{
+				return false;
+			}
+			else
+			{
+				curr = nc;
+			}
+		}
+
+		return true;
 	}
 
 	/** 
